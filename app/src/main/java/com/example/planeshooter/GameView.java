@@ -10,7 +10,7 @@ public class GameView extends View {
     Bitmap background;
     public GameView(Context context) {
         super(context);
-        background= BitmapFactory.decodeResource(getResources(),R.drawable.abc);
+        background= BitmapFactory.decodeResource(getResources(),R.drawable.background);
 
     }
 
