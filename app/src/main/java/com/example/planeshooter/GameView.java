@@ -7,13 +7,22 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.view.Display;
 import android.view.View;
+
+import java.util.Random;
 
 public class GameView extends View {
     Bitmap background;
     Rect rect;
-    int dwidth,dheight;
+    int planeX,planeY;
+    int dwidth,dheight,velocity,planeFrame;
+    int planeWidth;
+    Random random;
+    Handler handler;
+    Runnable runnable;
+    final long UPDATE_MILLS=30;
     Bitmap plane[]=new Bitmap[15];
     public GameView(Context context) {
         super(context);
@@ -39,13 +48,36 @@ public class GameView extends View {
         plane[12]=BitmapFactory.decodeResource(getResources(),R.drawable.download13);
         plane[13]=BitmapFactory.decodeResource(getResources(),R.drawable.download14);
         plane[14]=BitmapFactory.decodeResource(getResources(),R.drawable.download15);
-
-
+        planeX=dwidth+100;
+        planeY=100;
+        velocity=15;
+        planeFrame=0;
+        planeWidth=plane[0].getWidth();
+        random=new Random();
+        handler=new Handler();
+        runnable=new Runnable() {
+            @Override
+            public void run() {
+                invalidate();
+            }
+        };
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawBitmap(background,null,rect,null);
+        canvas.drawBitmap(plane[planeFrame],planeX,planeY,null);
+        planeFrame++;
+        if(planeFrame>14){
+            planeFrame=0;
+        }
+        planeX-=velocity;
+        if(planeX<-planeWidth){
+            planeX=dwidth+random.nextInt(500);
+            planeY=random.nextInt(300);
+            velocity=10+random.nextInt(10);
+        }
+        handler.postDelayed(runnable,UPDATE_MILLS);
     }
 }
