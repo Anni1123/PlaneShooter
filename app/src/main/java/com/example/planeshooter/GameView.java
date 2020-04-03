@@ -15,17 +15,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameView extends View {
-    Bitmap background;
+    Bitmap background,tank;
     Rect rect;
     static int dwidth,dheight;
     ArrayList<Plane> planes,planes2;
     Handler handler;
     Runnable runnable;
     final long UPDATE_MILLS=30;
-
+    int tankWidth,tankHeight;
     public GameView(Context context) {
         super(context);
         background= BitmapFactory.decodeResource(getResources(),R.drawable.background);
+        tank=BitmapFactory.decodeResource(getResources(),R.drawable.images);
         Display display=((Activity)getContext()).getWindowManager().getDefaultDisplay();
         Point size=new Point();
         display.getSize(size);
@@ -48,6 +49,8 @@ public class GameView extends View {
                 invalidate();
             }
         };
+        tankWidth=tank.getWidth();
+        tankHeight=tank.getHeight();
     }
 
     @Override
@@ -74,6 +77,7 @@ public class GameView extends View {
                 planes2.get(i).resetPOsition();
             }
         }
+        canvas.drawBitmap(tank,(dwidth/2-tankWidth/2),dheight-tankHeight,null);
         handler.postDelayed(runnable,UPDATE_MILLS);
     }
 }
