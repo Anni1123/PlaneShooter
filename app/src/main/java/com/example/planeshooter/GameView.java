@@ -81,7 +81,6 @@ public class GameView extends View {
         canvas.drawBitmap(tank,(dwidth/2-tankWidth/2),dheight-tankHeight,null);
         handler.postDelayed(runnable,UPDATE_MILLS);
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float touchX=event.getX();
