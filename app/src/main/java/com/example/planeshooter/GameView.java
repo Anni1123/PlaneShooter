@@ -9,6 +9,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -79,5 +80,18 @@ public class GameView extends View {
         }
         canvas.drawBitmap(tank,(dwidth/2-tankWidth/2),dheight-tankHeight,null);
         handler.postDelayed(runnable,UPDATE_MILLS);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float touchX=event.getX();
+        float touchY=event.getY();
+        int action=event.getAction();
+        if(action==MotionEvent.ACTION_DOWN){
+            if(touchX>=(dwidth/2-tankWidth/2)&&touchX<=(dwidth/2+tankWidth/2)&&touchY>=(dheight-tankHeight)){
+
+            }
+        }
+        return true;
     }
 }
